@@ -1,0 +1,16 @@
+node_modules/
+build/
+dist/
+*.log
+.env
+.env.local
+.DS_Store
+coverage/
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.npm/
+.yarn/
+.pnpm-store/
