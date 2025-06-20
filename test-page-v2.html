@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Тестовая страница для MCP сервера Яндекс Браузера v2.0">
+    <meta property="og:title" content="MCP Test Page">
+    <title>Тестовая страница MCP v2.0</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .section {
+            background: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .hover-effect {
+            padding: 10px;
+            background: #e0e0e0;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        .hover-effect:hover {
+            background: #3498db;
+            color: white;
+            transform: scale(1.05);
+        }
+        .scroll-target {
+            background: #2ecc71;
+            color: white;
+            padding: 20px;
+            margin: 100vh 0;
+            text-align: center;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0;
+            box-sizing: border-box;
+        }
+        button {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        button:hover {
+            background: #2980b9;
+        }
+        .console-test {
+            margin-top: 20px;
+        }
+        .data-element {
+            border: 2px solid #e74c3c;
+            padding: 10px;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1 id="main-title">Тестовая страница MCP Сервера v2.0</h1>
+        
+    <div class="section">
+        <h2>1. Тест консоли браузера</h2>
+        <p>Откройте консоль разработчика (F12) чтобы увидеть логи</p>
+        <button onclick="testConsole()">Тестировать консоль</button>
+        <div class="console-test">
+            <button onclick="console.log('Это обычный лог')">Log</button>
+            <button onclick="console.warn('Это предупреждение')">Warn</button>
+            <button onclick="console.error('Это ошибка')">Error</button>
+            <button onclick="console.info('Это информация')">Info</button>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>2. Тест hover эффектов</h2>
+        <div class="hover-effect" id="hover-target">
+            Наведите курсор на этот блок
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>3. Тест формы</h2>
+        <form id="test-form">
+            <input type="text" id="name" placeholder="Имя" data-test="name-field">
+            <input type="email" id="email" placeholder="Email" data-test="email-field">
+            <select id="country" data-test="country-select">
+                <option value="">Выберите страну</option>
+                <option value="ru">Россия</option>
+                <option value="us">США</option>
+                <option value="uk">Великобритания</option>
+            </select>
+            <input type="checkbox" id="subscribe" data-test="subscribe-checkbox">
+            <label for="subscribe">Подписаться на рассылку</label>
+            <br><br>
+            <textarea id="message" placeholder="Сообщение" rows="4" data-test="message-field"></textarea>
+            <button type="submit">Отправить</button>
+        </form>
+    </div>
+    <div class="section">
+        <h2>4. Тест получения данных</h2>
+        <div class="data-element" data-id="123" data-type="test" data-custom="value">
+            <p id="text-content">Это текстовое содержимое для извлечения</p>
+            <div id="nested-html">
+                <strong>Жирный текст</strong>
+                <em>Курсивный текст</em>
+                <span class="highlight">Выделенный текст</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>5. Тест клавиатуры</h2>
+        <input type="text" id="keyboard-test" placeholder="Нажмите клавиши здесь">
+        <div id="key-log"></div>
+    </div>
+
+    <div class="scroll-target" id="scroll-destination">
+        <h2>Цель для скроллинга</h2>
+        <p>Вы успешно прокрутили до этого элемента!</p>
+    </div>
+
+    <script>
+        // Функция для тестирования консоли
+        function testConsole() {
+            console.log('Начало теста консоли...');
+            console.info('Текущее время:', new Date().toLocaleString());
+            console.warn('Это тестовое предупреждение');
+            console.error('Это тестовая ошибка');
+            console.log('Объект:', { test: 'data', array: [1, 2, 3] });
+        }
+
+        // Логирование событий клавиатуры
+        document.getElementById('keyboard-test').addEventListener('keydown', (e) => {
+            const log = document.getElementById('key-log');
+            log.textContent = `Нажата клавиша: ${e.key} (код: ${e.keyCode})`;
+            console.log(`Keyboard event: ${e.key}`);
+        });
+
+        // Логирование отправки формы
+        document.getElementById('test-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            console.log('Форма отправлена!');
+            alert('Форма отправлена (см. консоль)');
+        });
+
+        // Инициализация
+        console.log('Страница загружена и готова к тестированию');
+    </script>
+</body>
+</html>

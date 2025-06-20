@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тестовая страница для MCP сервера</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input[type="text"],
+        input[type="email"],
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-right: 10px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .test-section {
+            margin-top: 40px;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+        }
+        .question {
+            margin-bottom: 20px;
+        }
+        .options label {
+            display: block;
+            margin: 5px 0;
+            cursor: pointer;
+        }
+        .options input[type="radio"] {
+            margin-right: 10px;
+        }
+        #result {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 5px;
+            display: none;
+        }
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .info {
+            background-color: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+        .clickable-elements {
+            margin-top: 30px;
+        }
+        .clickable-elements button {
+            margin: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Демонстрация MCP сервера</h1>
+        
+        <!-- Форма для заполнения -->
+        <h2>Форма заказа</h2>
+        <form id="orderForm">
+            <div class="form-group">
+                <label for="name">Имя:</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="phone">Телефон:</label>
+                <input type="text" id="phone" name="phone" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="address">Адрес доставки:</label>
+                <input type="text" id="address" name="address" required>
+            </div>
+            
+            <button type="submit" id="submitOrder">Оформить заказ</button>
+            <button type="reset">Очистить</button>
+        </form>
+        
+        <!-- Тестовый раздел -->
+        <div class="test-section">
+            <h2>Тест по JavaScript</h2>
+            <form id="testForm">
+                <div class="question">
+                    <p><strong>1. Что выведет console.log(typeof null)?</strong></p>
+                    <div class="options">
+                        <label><input type="radio" name="q1" value="null" class="answer-1"> null</label>
+                        <label><input type="radio" name="q1" value="object" class="answer-2"> object</label>
+                        <label><input type="radio" name="q1" value="undefined" class="answer-3"> undefined</label>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <p><strong>2. Какой метод используется для добавления элемента в конец массива?</strong></p>
+                    <div class="options">
+                        <label><input type="radio" name="q2" value="push" class="answer-4"> push()</label>
+                        <label><input type="radio" name="q2" value="pop" class="answer-5"> pop()</label>
+                        <label><input type="radio" name="q2" value="shift" class="answer-6"> shift()</label>
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <p><strong>3. Что такое замыкание (closure)?</strong></p>
+                    <div class="options">
+                        <label><input type="radio" name="q3" value="function" class="answer-7"> Обычная функция</label>
+                        <label><input type="radio" name="q3" value="closure" class="answer-8"> Функция со ссылками на внешние переменные</label>
+                        <label><input type="radio" name="q3" value="loop" class="answer-9"> Цикл в JavaScript</label>
+                    </div>
+                </div>
+                
+                <button type="submit" id="submit-test">Отправить ответы</button>
+            </form>
+        </div>
+        
+        <!-- Кликабельные элементы для тестирования -->
+        <div class="clickable-elements">
+            <h2>Интерактивные элементы</h2>
+            <button onclick="showAlert('Кнопка 1 нажата!')" class="btn-1">Кнопка 1</button>
+            <button onclick="showAlert('Кнопка 2 нажата!')" class="btn-2">Кнопка 2</button>
+            <button onclick="showAlert('Кнопка 3 нажата!')" class="btn-3">Кнопка 3</button>
+            <button onclick="changeBackground()" id="bg-change">Изменить фон</button>
+        </div>
+        
+        <!-- Результаты -->
+        <div id="result"></div>
+    </div>
+    
+    <script>
+        // Обработка формы заказа
+        document.getElementById('orderForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData);
+            
+            showResult('Заказ успешно оформлен!<br>' + 
+                      'Имя: ' + data.name + '<br>' +
+                      'Email: ' + data.email + '<br>' +
+                      'Телефон: ' + data.phone + '<br>' +
+                      'Адрес: ' + data.address, 'success');
+        });
+        
+        // Обработка теста
+        document.getElementById('testForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const answers = {
+                q1: 'object',
+                q2: 'push',
+                q3: 'closure'
+            };
+            
+            let score = 0;
+            const formData = new FormData(this);
+            
+            for (let [question, userAnswer] of formData.entries()) {
+                if (answers[question] === userAnswer) {
+                    score++;
+                }
+            }
+            
+            showResult('Результат теста: ' + score + ' из 3 правильных ответов!', 'info');
+        });
+        
+        // Вспомогательные функции
+        function showAlert(message) {
+            alert(message);
+            console.log('Alert shown:', message);
+        }
+        
+        function changeBackground() {
+            const colors = ['#f0f8ff', '#ffe4e1', '#f0fff0', '#fffacd', '#e6e6fa'];
+            const randomColor = colors[Math.floor(Math.random() * colors.length)];
+            document.body.style.backgroundColor = randomColor;
+            console.log('Background changed to:', randomColor);
+        }
+        
+        function showResult(message, type) {
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = message;
+            resultDiv.className = type;
+            resultDiv.style.display = 'block';
+            
+            // Автоматически скрыть через 5 секунд
+            setTimeout(() => {
+                resultDiv.style.display = 'none';
+            }, 5000);
+        }
+        
+        // Логирование для отладки
+        console.log('Страница загружена и готова к тестированию MCP сервера');
+    </script>
+</body>
+</html>
